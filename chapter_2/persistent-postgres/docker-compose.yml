@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg
+    environment:
+      POSTGRES_USER: etl
+      POSTGRES_PASSWORD: etlpass
+      POSTGRES_DB: warehouse
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - de_net
+    ports:
+      - "5432:5432"
+
+  loader:
+    image: python:3.11-slim
+    depends_on:
+      - postgres
+    volumes:
+      - ./input:/input
+      - ./loader:/app
+    working_dir: /app
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             python load_to_postgres.py"
+    networks:
+      - de_net
+
+volumes:
+  pgdata:
+
+networks:
+  de_net:
