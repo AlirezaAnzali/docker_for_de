@@ -1,0 +1,13 @@
+analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: pg
+      user: etl
+      password: etlpass
+      port: 5432
+      dbname: warehouse
+      schema: public
+      threads: 4
+

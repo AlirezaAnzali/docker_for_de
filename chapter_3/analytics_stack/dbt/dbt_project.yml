@@ -1,0 +1,18 @@
+name: analytics
+version: "1.0"
+config-version: 2
+
+profile: analytics
+
+models:
+  analytics:              # project name
+    analytics:            # folder: models/analytics
+      staging:             # folder: models/analytics/staging
+        +materialized: view
+        +schema: staging
+
+      marts:               # folder: models/analytics/marts
+        +materialized: table
+        +schema: analytics
+
+
